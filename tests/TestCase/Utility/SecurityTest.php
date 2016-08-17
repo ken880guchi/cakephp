@@ -76,6 +76,7 @@ class SecurityTest extends TestCase
      */
     public function testRijndael()
     {
+        $this->skipIf(version_compare(PHP_VERSION, '7.0.99') >= 0, 'PHP7.1 deprecates ext/mcrypt');
         $this->skipIf(!function_exists('mcrypt_encrypt'));
         $engine = Security::engine();
 
@@ -104,6 +105,8 @@ class SecurityTest extends TestCase
      */
     public function testRijndaelInvalidOperation()
     {
+        $this->skipIf(version_compare(PHP_VERSION, '7.0.99') >= 0, 'PHP7.1 deprecates ext/mcrypt');
+
         $txt = 'The quick brown fox jumped over the lazy dog.';
         $key = 'DYhG93b0qyJfIxfs2guVoUubWwvniR2G0FgaC9mi';
         Security::rijndael($txt, $key, 'foo');
@@ -117,6 +120,8 @@ class SecurityTest extends TestCase
      */
     public function testRijndaelInvalidKey()
     {
+        $this->skipIf(version_compare(PHP_VERSION, '7.0.99') >= 0, 'PHP7.1 deprecates ext/mcrypt');
+
         $txt = 'The quick brown fox jumped over the lazy dog.';
         $key = 'too small';
         Security::rijndael($txt, $key, 'encrypt');
@@ -259,6 +264,7 @@ class SecurityTest extends TestCase
      */
     public function testEngineEquivalence()
     {
+        $this->skipIf(version_compare(PHP_VERSION, '7.0.99') >= 0, 'PHP7.1 deprecates ext/mcrypt');
         $this->skipIf(!defined('MCRYPT_RIJNDAEL_128'), 'This needs mcrypt extension to be loaded.');
 
         $restore = Security::engine();
